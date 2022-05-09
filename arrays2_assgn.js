@@ -20,8 +20,8 @@ function rotateArray(array, moves) {
         // for moves to the right
         for (var i = 0; i < moves; i++) {
             var temp = array[array.length - 1];
-            for (var k = array.length - 2; k >= 0; k--) {
-                array[k + 1] = array[k];
+            for (var posn = array.length - 2; posn >= 0; posn--) {
+                array[posn + 1] = array[posn];
             }
             array[0] = temp; // Put temp value at the beginning of the array
         }
@@ -29,8 +29,8 @@ function rotateArray(array, moves) {
         // for moves toward left 
         for (var i = 0; i < Math.abs(moves); i++) {
             var temp = array[0];
-            for (var k = 1; k < array.length; k++) {
-                array[k - 1] = array[k];
+            for (var posn = 1; posn < array.length; posn++) {
+                array[posn - 1] = array[posn];
             }
             array[array.length - 1] = temp; // Put temp value at end of array
         }
@@ -43,62 +43,39 @@ function rotateArray(array, moves) {
 
 
 /* Filter Range ---------------------------------------------------------------- */
-function filterRange(arr, minVal, maxVal) {
-    for (var i = 0; i < arr.length; i++) {
-        if (arr[i] < minVal || arr[i] > maxVal) {
-            for (var k = i + 1; k < arr.length; k++) {
-                arr[k - 1] = arr[k];
+function filterRange(array, minVal, maxVal) {
+    for (var i = 0; i < array.length; i++) {
+        if (array[i] < minVal || array[i] > maxVal) {
+            for (var x = i + 1; x < array.length; x++) {
+                array[x - 1] = array[x];
             }
-            arr.length--; 
-            i--;
+            array.length--; 
+            i--; // from video walkthru @1:18: this "cancels out" the i++
         }
     }
 }
 
-// // Second version with only one for loop
-// function filterRangeV2(arr, minVal, maxVal) {
-//     var nextInd = 0; // Index where the next array value that's from min to max (inclusively) will go
-//     // Loop through the array
-//     for (var i = 0; i < arr.length; i++) {
-//         if (arr[i] >= minVal && arr[i] <= maxVal) {
-//             arr[nextInd] = arr[i];
-//             nextInd++; // Increment index for next valid value found
-//         }
-//     }
-//     arr.length = nextInd; // Chop off excess values
-// }
 
+// var testArray=[21,22,23,24,25,26];
+// filterRange(testArray, 22, 25);
+// console.log(testArray);
 
 
 /* Concat ---------------------------------------------------------------- */
 // First version
-function concatArrays(arr1, arr2) {
-    var newArr = [];
-    var curInd = 0; 
-    for (var i = 0; i < arr1.length; i++) {
-        newArr[curInd] = arr1[i];
-        curInd++;
+function concatArrays(array1, array2) {
+    var newArray = [];
+    var nowPosn = 0; 
+    for (var i = 0; i < array1.length; i++) {
+        newArray[nowPosn] = array1[i];
+        nowPosn++;
     }
-    for (var i = 0; i < arr2.length; i++) {
-        newArr[curInd] = arr2[i];
-        curInd++;
+    for (var i = 0; i < array2.length; i++) {
+        newArray[nowPosn] = array2[i];
+        nowPosn++;
     }
-    return newArr;
+    return newArray;
 }
 
-// // Second version - with redundancy removed - using a helper function we define
-// function concatArraysV2(arr1, arr2) {
-//     var newArr = [];
-//     buildFrom(newArr, arr1); // Add values from first array to the new array
-//     buildFrom(newArr, arr2); // From second array
-//     return newArr;
-// }
-
-// function buildFrom(arrayToBuild, arrayFrom) {
-//     var curInd = arrayToBuild.length; // Starting index
-//     // Loop to add values to new array
-//     for (var i = 0; i < arrayFrom.length; i++) {
-//         arrayToBuild[curInd] = arrayFrom[i];
-//         curInd++;
-//     }
-// }
+// var test=concatArrays([2,4,6],['A','B',9]);
+// console.log(test);
